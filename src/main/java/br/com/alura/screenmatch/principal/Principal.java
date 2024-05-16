@@ -3,11 +3,16 @@ package br.com.alura.screenmatch.principal;
 import br.com.alura.screenmatch.model.ConverteDados;
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
+import br.com.alura.screenmatch.model.Serie;
+import br.com.alura.screenmatch.repository.SerieRepository;
 import br.com.alura.screenmatch.service.CosumoApi;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 
 public class Principal {
@@ -24,7 +29,15 @@ public class Principal {
 
     private List<DadosSerie> dadosSeries = new ArrayList<>();
 
+    @Autowired
+    private SerieRepository repositorio;
+
+    public Principal(SerieRepository repositorio) {
+        this.repositorio = repositorio;
+    }
+
     public void exibeMenu() {
+
         var menu = """
                 1 - Buscar séries
                 2 - Buscar episódios
@@ -57,8 +70,13 @@ public class Principal {
     }
 
     private void buscarSerieWeb() {
+
         DadosSerie dados = getDadosSerie();
-        dadosSeries.add(dados);
+
+        Serie serie = new Serie(dados);
+//        dadosSeries.add(dados);
+
+        repositorio.save(serie);
         System.out.println(dados);
     }
 
@@ -79,10 +97,17 @@ public class Principal {
             DadosTemporada dadosTemporada = conversor.obterDados(json, DadosTemporada.class);
             temporadas.add(dadosTemporada);
         }
-        temporadas.forEach(System.out::println);
     }
 
     private void listarSerieBuscadas() {
-        dadosSeries.forEach(System.out::println);
+
+        List<Serie> series = new ArrayList<>();
+        series = repositorio.findAll();
+
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
+
     }
+
 }
