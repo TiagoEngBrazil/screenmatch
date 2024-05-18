@@ -42,7 +42,9 @@ public class Principal {
                 3 - Listar series buscadas
                 4 - Buscar séries por título 
                 5 - Buscar séries por ator  
-                6 - Buscar séries por avaliacao  
+                6 - Buscar séries por avaliação  
+                7 - Buscar séries por categoria  
+                8 - Buscar séries por temporadas e melhor avaliação  
                 0 - Sair                                 
                 """;
 
@@ -64,6 +66,10 @@ public class Principal {
                 buscarSeriePorAtor();
             } else if (opcao == 6) {
                 buscarTop5Series();
+            } else if (opcao == 7) {
+                buscarSeriePorCategoria();
+            } else if (opcao == 8) {
+                buscarSeriePorTotalTemporadas();
             } else {
                 System.out.println("Opção inválida");
             }
@@ -172,6 +178,36 @@ public class Principal {
         serieTop.forEach(
                 s -> System.out.println(s.getTitulo() + " avaliações: " + s.getAvaliacao()
                 ));
+    }
+
+    private void buscarSeriePorCategoria() {
+        System.out.println("Deseja bucsar series de qual genero/categoria? ");
+        var nomeGenero = leitura.nextLine();
+
+        Categoria categoria = Categoria.fromPortugues(nomeGenero);
+
+        List<Serie> seriesPorCategoria = repositorio.findByGenero(categoria);
+
+        System.out.println("Série de categoria " + nomeGenero);
+
+        seriesPorCategoria.forEach(System.out::println);
+    }
+
+    private void buscarSeriePorTotalTemporadas() {
+        System.out.println("Deseja buscar serie com até quantas temporadas? ");
+        var totalTemporadas = leitura.nextInt();
+
+        System.out.println("Deseja ver series apartir quanto de avaliação? ");
+        var avaliacao = leitura.nextDouble();
+
+        List<Serie> seriesPorTemporadasEAvaliacao = repositorio.seriesPorTemporadaEAvaliacao(totalTemporadas, avaliacao);
+
+        System.out.println("Séries com até " + totalTemporadas + "temporadas e com as melhores avaliações são: ");
+
+        seriesPorTemporadasEAvaliacao.forEach(
+                s -> System.out.println(s.getTitulo() + " avaliação: " + s.getAvaliacao())
+        );
+
     }
 
 }
