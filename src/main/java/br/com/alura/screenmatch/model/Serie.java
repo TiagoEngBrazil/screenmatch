@@ -29,7 +29,7 @@ public class Serie {
 
 
     @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Epsodio> epsodios = new ArrayList<>();
+    private List<Episodio> episodios = new ArrayList<>();
 
     public Serie() {
 
@@ -45,14 +45,14 @@ public class Serie {
         this.sinopse = dadosSerie.sinopse();
     }
 
-    public List<Epsodio> getEpsodios() {
-        return epsodios;
+    public List<Episodio> getEpsodios() {
+        return episodios;
     }
 
-    public void setEpsodios(List<Epsodio> epsodios) {
+    public void setEpsodios(List<Episodio> epsodios) {
         epsodios.forEach(e -> e.setSerie(this));
 
-        this.epsodios = epsodios;
+        this.episodios = epsodios;
     }
 
     public Long getId() {

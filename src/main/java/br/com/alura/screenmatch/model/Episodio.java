@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 @Entity
 @Table(name = "episodios")
 
-public class Epsodio {
+public class Episodio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,10 +27,10 @@ public class Epsodio {
     @ManyToOne()
     private Serie serie;
 
-    private Epsodio(){}
+    private Episodio(){}
 
 
-    public Epsodio(Integer numeroTemporada, DadosEpsodio dadosEpsodio) {
+    public Episodio(Integer numeroTemporada, DadosEpsodio dadosEpsodio) {
         this.temporada = numeroTemporada;
         this.titulo = dadosEpsodio.titulo();
         this.numero = dadosEpsodio.numero();
