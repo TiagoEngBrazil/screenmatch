@@ -1,5 +1,6 @@
 package br.com.alura.screenmatch.model;
 
+import br.com.alura.screenmatch.service.ConsultaGoogleTranslate;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -38,14 +39,14 @@ public class Serie {
     public Serie(DadosSerie dadosSerie) {
         this.titulo = dadosSerie.titulo();
         this.totalTemporadas = dadosSerie.totalTemporadas();
-        this.avaliacao = OptionalDouble.of(Double.valueOf(dadosSerie.avaliacao())).orElse(0);
+        this.avaliacao = OptionalDouble.of(Double.parseDouble(dadosSerie.avaliacao())).orElse(0);
         this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
-        this.sinopse = dadosSerie.sinopse();
+        this.sinopse = ConsultaGoogleTranslate.obterTraducao(dadosSerie.sinopse());
     }
 
-    public List<Episodio> getEpsodios() {
+    public List<Episodio> getEpisodios() {
         return episodios;
     }
 
@@ -122,7 +123,7 @@ public class Serie {
     @Override
     public String toString() {
         return
-                "genero = " + genero +
+                        "genero = " + genero +
                         ", titulo =" + titulo + '\'' +
                         ", totalTemporadas = " + totalTemporadas +
                         ", avaliacao = " + avaliacao +

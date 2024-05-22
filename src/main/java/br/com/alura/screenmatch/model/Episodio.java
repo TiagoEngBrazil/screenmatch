@@ -1,13 +1,12 @@
 package br.com.alura.screenmatch.model;
 
 import jakarta.persistence.*;
+import org.threeten.bp.format.DateTimeParseException;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 @Entity
 @Table(name = "episodios")
-
 public class Episodio {
 
     @Id
@@ -18,17 +17,16 @@ public class Episodio {
 
     private String titulo;
 
-    private Integer numero;
+    private Integer numero;  // Este é o campo correto
 
     private Double avaliacao;
 
     private LocalDate dataDeLancamento;
 
-    @ManyToOne()
+    @ManyToOne
     private Serie serie;
 
-    private Episodio(){}
-
+    private Episodio() {}
 
     public Episodio(Integer numeroTemporada, DadosEpsodio dadosEpsodio) {
         this.temporada = numeroTemporada;
@@ -46,9 +44,9 @@ public class Episodio {
         } catch (DateTimeParseException e) {
             this.dataDeLancamento = null;
         }
-
-
     }
+
+    // Getters and Setters
 
     public Long getId() {
         return id;
