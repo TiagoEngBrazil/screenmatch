@@ -22,7 +22,6 @@ public class Principal {
 
     private final String API_KEY = "&apikey=888b7841";
 
-//    private List<DadosSerie> dadosSeries = new ArrayList<>();
 
     @Autowired
     private SerieRepository repositorio;

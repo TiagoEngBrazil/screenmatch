@@ -17,7 +17,7 @@ public class Episodio {
 
     private String titulo;
 
-    private Integer numero;  // Este é o campo correto
+    private Integer numero;
 
     private Double avaliacao;
 
@@ -46,7 +46,6 @@ public class Episodio {
         }
     }
 
-    // Getters and Setters
 
     public Long getId() {
         return id;

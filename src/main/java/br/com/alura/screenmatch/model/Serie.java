@@ -43,7 +43,7 @@ public class Serie {
         this.genero = Categoria.fromString(dadosSerie.genero().split(",")[0].trim());
         this.atores = dadosSerie.atores();
         this.poster = dadosSerie.poster();
-        this.sinopse = ConsultaGoogleTranslate.obterTraducao(dadosSerie.sinopse());
+        this.sinopse = dadosSerie.sinopse();
     }
 
     public List<Episodio> getEpisodios() {
